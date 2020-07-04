@@ -1,0 +1,17 @@
+version: '3.6'
+
+services:
+  backup-buddy:
+    build:
+      context: .
+    container_name: backup-buddy
+    restart: always
+    volumes:
+      - "./backup-data:/backup-data"
+      - "./rdw.conf:/etc/rdiffweb/rdw.conf"
+    environment:
+      - DISPLAY=unix:0
+    tty: true
+    entrypoint: rdiffweb
+    ports:
+      - "8081:8080"
