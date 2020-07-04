@@ -4,7 +4,7 @@ services:
   backup-buddy:
     build:
       context: .
-    container_name: backup-buddy
+    container_name: backup-friend
     restart: always
     volumes:
       - "./backup-data:/backup-data"
