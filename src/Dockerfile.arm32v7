@@ -1,0 +1,81 @@
+FROM arm32v7/ubuntu:20.04
+MAINTAINER Guy Sheffer <guysoft@gmail.com>
+
+# Parts taken from https://github.com/elgalu/docker-selenium/blob/master/Dockerfile
+
+
+ENV LANG_WHICH en
+ENV LANG_WHERE US
+ENV ENCODING UTF-8
+ENV LANGUAGE ${LANG_WHICH}_${LANG_WHERE}.${ENCODING}
+ENV LANG ${LANGUAGE}
+
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    tzdata \
+    apt-utils \
+    python3 \
+    firefox \
+    python3-distutils \
+    python3-dev \
+    libldap2-dev \
+    libsasl2-dev \
+    curl \
+    wget \
+    locales \
+    sudo \
+    unzip \
+    xvfb \
+    x11vnc \
+    rdiff-backup \
+    # For timelib
+    build-essential \
+  && locale-gen ${LANGUAGE} \
+  && locale-gen he_IL.UTF-8 \
+  && dpkg-reconfigure --frontend noninteractive locales \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt -qyy clean
+
+#===================
+# Timezone settings
+#===================
+# Full list at https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+#  e.g. "US/Pacific" for Los Angeles, California, USA
+# e.g. ENV TZ "US/Pacific"
+ENV TZ="Asia/Jerusalem"
+# Apply TimeZone
+# Layer size: tiny: 1.339 MB
+RUN echo "Setting time zone to '${TZ}'" \
+  && echo "${TZ}" > /etc/timezone \
+  && dpkg-reconfigure --frontend noninteractive tzdata
+
+#========================================
+# Add normal user with passwordless sudo
+#========================================
+# Layer size: tiny: 0.3 MB
+RUN useradd backuser \
+         --shell /bin/bash  \
+         --create-home \
+  && usermod -a -G sudo backuser \
+  && gpasswd -a backuser video \
+  && echo 'backuser:secret' | chpasswd \
+  && useradd extrauser \
+         --shell /bin/bash  \
+  && usermod -a -G sudo extrauser \
+  && gpasswd -a extrauser video \
+  && gpasswd -a extrauser backuser \
+  && echo 'extrauser:secret' | chpasswd \
+&& echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+
+RUN wget https://bootstrap.pypa.io/get-pip.py -O - | python3
+RUN pip3 install rdiffweb
+
+#===================================================
+# Run the following commands as non-privileged user
+#===================================================
+USER root
+WORKDIR /root
+
+
