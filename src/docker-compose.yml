@@ -1,17 +1,35 @@
 version: '3.6'
 
 services:
-  backup-buddy:
-    build:
-      context: .
-    container_name: backup-friend
+  backupfriend:
+    image: guysoft/backupfriend
+    container_name: backupfriend
     restart: always
     volumes:
-      - "./backup-data:/backup-data"
+      - "/mnt/tal/backup-data:/backups"
       - "./rdw.conf:/etc/rdiffweb/rdw.conf"
     environment:
-      - DISPLAY=unix:0
+      # - DISPLAY=unix:0
+      - VIRTUAL_PORT=8080
     tty: true
     entrypoint: rdiffweb
     ports:
-      - "8081:8080"
+      - "8082:8080"
+  sshd:
+    image: guysoft/backupfriend-ssh
+    container_name: backupfriend-sshd
+    restart: always
+    volumes:
+      - "/backup:/backup-data"
+      - "/home/pi/.ssh/authorized_keys:/etc/authorized_keys/user"
+    tty: true
+    ports:
+      - "8022:22"
+    environment:
+      - SSH_USERS=user:1000:1000
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
+

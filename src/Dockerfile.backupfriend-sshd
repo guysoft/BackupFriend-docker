@@ -1,0 +1,14 @@
+FROM panubo/sshd
+MAINTAINER Guy Sheffer <guysoft@gmail.com>
+
+# Parts taken from https://github.com/elgalu/docker-selenium/blob/master/Dockerfile
+
+RUN apk update && apk add --no-cache python3 python3-dev build-base librsync-dev
+
+RUN wget https://bootstrap.pypa.io/get-pip.py -O - | python3
+
+RUN pip3 install rdiff-backup
+
+ENTRYPOINT ["/entry.sh"]
+
+CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config"]
