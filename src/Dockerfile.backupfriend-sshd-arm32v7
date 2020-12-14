@@ -1,0 +1,30 @@
+FROM debian:buster AS builder
+
+# Download QEMU, see https://github.com/docker/hub-feedback/issues/1261
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    apt-utils \
+  && rm -rf /var/lib/apt/lists/* \
+  && apt -qyy clean
+RUN export QEMU_USER_STATIC_LATEST_TAG=$(curl -s https://api.github.com/repos/multiarch/qemu-user-static/tags \
+        | grep 'name.*v[0-9]' | head -n 1 | cut -d '"' -f 4) && \
+    curl -SL "https://github.com/multiarch/qemu-user-static/releases/download/${QEMU_USER_STATIC_LATEST_TAG}/x86_64_qemu-arm-static.tar.gz" \
+        | tar xzv --directory /
+
+FROM guysoft/sshd:arm32v7
+MAINTAINER Guy Sheffer <guysoft@gmail.com>
+
+COPY --from=builder /qemu-arm-static /usr/bin/
+
+# Parts taken from https://github.com/elgalu/docker-selenium/blob/master/Dockerfile
+
+RUN apk update && apk add --no-cache python3 python3-dev build-base librsync-dev
+
+RUN wget https://bootstrap.pypa.io/get-pip.py -O - | python3
+
+RUN pip3 install rdiff-backup
+
+ENTRYPOINT ["/entry.sh"]
+
+CMD ["/usr/sbin/sshd", "-D", "-e", "-f", "/etc/ssh/sshd_config"]
