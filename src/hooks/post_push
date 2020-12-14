@@ -31,6 +31,28 @@ EOF
   cat manifest-generated.yaml
 }
 
+function generate_manifest_branch {
+  NAME=$1
+  RELEASE_TAG=$2
+  
+  cat > manifest-generated.yaml << EOF
+image: ${NAME}:latest
+manifests:
+  - image: ${NAME}:amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: ${NAME}:arm32v7
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
+EOF
+
+  echo "manifest: "
+  cat manifest-generated.yaml
+}
+
 function docker_tag_exists() {
     curl --silent -f -lSL https://index.docker.io/v1/repositories/$1/tags/$2 > /dev/null
 }
@@ -42,10 +64,11 @@ function docker_tag_exists() {
 
 
 # If we're building the "devel" branch, then also push it as "latest"
-if [[ "$DOCKER_TAG" == "amd64" ]] || [[ "$DOCKER_TAG" == "arm32v7" ]]
+if [[ "$DOCKER_TAG" == "amd64" ]] || [[ "$DOCKER_TAG" == "arm32v7" ]] || [[ "$DOCKER_TAG" == "arm64v8" ]]
 then
   echo "Pushing multi-arch manifest $DOCKER_REPO:latest"
-  ./manifest-tool push from-spec multi-arch-manifest.yaml
+  generate_manifest_branch "${NAME}"
+  ./manifest-tool push from-spec manifest-generated.yaml
 
 # Handle release
 else
