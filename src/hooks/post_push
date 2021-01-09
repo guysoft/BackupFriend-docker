@@ -67,7 +67,7 @@ function docker_tag_exists() {
 if [[ "$DOCKER_TAG" == "amd64" ]] || [[ "$DOCKER_TAG" == "arm32v7" ]] || [[ "$DOCKER_TAG" == "arm64v8" ]]
 then
   echo "Pushing multi-arch manifest $DOCKER_REPO:latest"
-  generate_manifest_branch "${NAME}"
+  generate_manifest_branch "$DOCKER_REPO:latest"
   ./manifest-tool push from-spec manifest-generated.yaml
 
 # Handle release
