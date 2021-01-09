@@ -19,7 +19,7 @@ COPY --from=builder /qemu-aarch64-static /usr/bin/
 
 # Parts taken from https://github.com/elgalu/docker-selenium/blob/master/Dockerfile
 
-RUN apk update && apk add --no-cache python3 python3-dev build-base librsync-dev
+RUN apk update && apk add --no-cache python3 python3-dev build-base librsync-dev ca-certificates
 
 RUN wget https://bootstrap.pypa.io/get-pip.py -O - | python3
 
