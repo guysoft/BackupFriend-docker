@@ -69,7 +69,7 @@ RUN useradd backuser \
 && echo 'ALL ALL = (ALL) NOPASSWD: ALL' >> /etc/sudoers
 
 
-RUN wget https://bootstrap.pypa.io/get-pip.py -O - | python3
+RUN wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py -O - | python3
 RUN pip3 install rdiffweb
 
 #===================================================
