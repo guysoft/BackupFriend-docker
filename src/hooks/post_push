@@ -72,8 +72,8 @@ NAME=${USER_NAME}/${REPO_NAME}
 # If we're building the "devel" branch, then also push it as "latest"
 if [[ "$DOCKER_TAG" == "amd64" ]] || [[ "$DOCKER_TAG" == "arm32v7" ]] || [[ "$DOCKER_TAG" == "arm64v8" ]]
 then
-  echo "Pushing multi-arch manifest $NAME:latest"
-  generate_manifest_branch "$NAME:latest"
+  echo "Pushing multi-arch manifest $NAME"
+  generate_manifest_branch "$NAME"
   ./manifest-tool push from-spec manifest-generated.yaml
 
 # Handle release
