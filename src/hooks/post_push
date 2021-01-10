@@ -63,11 +63,17 @@ function docker_tag_exists() {
 # ${DOCKER_TAG} = 1.2.4-amd64
 
 
+REPO_NAME=${IMAGE_NAME##*/} ; REPO_NAME=${REPO_NAME%%:*}
+REPO_NAME_AND_USER=${IMAGE_NAME%%/${REPO_NAME}*}
+USER_NAME=${REPO_NAME_AND_USER##*/}
+
+NAME=${USER_NAME}/${REPO_NAME}
+  
 # If we're building the "devel" branch, then also push it as "latest"
 if [[ "$DOCKER_TAG" == "amd64" ]] || [[ "$DOCKER_TAG" == "arm32v7" ]] || [[ "$DOCKER_TAG" == "arm64v8" ]]
 then
-  echo "Pushing multi-arch manifest $DOCKER_REPO:latest"
-  generate_manifest_branch "$DOCKER_REPO:latest"
+  echo "Pushing multi-arch manifest $NAME:latest"
+  generate_manifest_branch "$NAME:latest"
   ./manifest-tool push from-spec manifest-generated.yaml
 
 # Handle release
@@ -75,12 +81,6 @@ else
   echo "handeling: ${DOCKER_REPO}|${IMAGE_NAME}|${DOCKER_TAG}"
   
   RELEASE_TAG=${DOCKER_TAG%%-*}
-  
-  REPO_NAME=${IMAGE_NAME##*/} ; REPO_NAME=${REPO_NAME%%:*}
-  REPO_NAME_AND_USER=${IMAGE_NAME%%/${REPO_NAME}*}
-  USER_NAME=${REPO_NAME_AND_USER##*/}
-  
-  NAME=${USER_NAME}/${REPO_NAME}
   
   # Example: values
   # ${NAME} = guysoft/custompios
