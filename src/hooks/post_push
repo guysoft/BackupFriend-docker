@@ -25,6 +25,11 @@ manifests:
       architecture: arm
       os: linux
       variant: v7
+  - image: ${NAME}:${RELEASE_TAG}-arm64v8
+    platform:
+      architecture: arm
+      os: linux
+      variant: v8
 EOF
 
   echo "manifest: "
@@ -47,6 +52,11 @@ manifests:
       architecture: arm
       os: linux
       variant: v7
+  - image: ${NAME}:arm64v8
+    platform:
+      architecture: arm
+      os: linux
+      variant: v8
 EOF
 
   echo "manifest: "
