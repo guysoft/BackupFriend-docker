@@ -12,8 +12,8 @@ Build and run:
 
 # Containers on docker hub:
 * [ssh container on Docker Hub](https://hub.docker.com/repository/docker/guysoft/backupfriend-ssh)
-
 * [webserver container on Docker Hub](https://hub.docker.com/repository/docker/guysoft/backupfriend)
+* Web server uses [rdiffweb](https://gitlab.com/ikus-soft/rdiffweb/)
 
 
 * rdiffweb instance is at port 8082 eg: http://backupfriend.local:8082
