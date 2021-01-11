@@ -14,6 +14,7 @@ Build and run:
 * [ssh container on Docker Hub](https://hub.docker.com/repository/docker/guysoft/backupfriend-ssh)
 * [webserver container on Docker Hub](https://hub.docker.com/repository/docker/guysoft/backupfriend)
 * Web server uses [rdiffweb](https://gitlab.com/ikus-soft/rdiffweb/)
+  * Default user and password is user: ``admin`` , password: ``admin123`` like in the demo of rdiffweb
 
 
 * rdiffweb instance is at port 8082 eg: http://backupfriend.local:8082
