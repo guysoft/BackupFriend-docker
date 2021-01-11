@@ -6,7 +6,7 @@ services:
     container_name: backupfriend
     restart: always
     volumes:
-      - "/backup:/backup-data"
+      - "/backup:/backup"
       - "./rdw.conf:/etc/rdiffweb/rdw.conf"
     environment:
       # - DISPLAY=unix:0
@@ -21,7 +21,7 @@ services:
     container_name: backupfriend-sshd
     restart: always
     volumes:
-      - "/backup:/backup-data"
+      - "/backup:/backup"
       - "/home/pi/.ssh/authorized_keys:/etc/authorized_keys/user"
     tty: true
     ports:
