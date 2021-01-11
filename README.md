@@ -1,6 +1,10 @@
 # BackupFriend-docker
 
-Build and run::
+This docker container used as a server-side to sync backups to [backupfriend-client](https://github.com/guysoft/backupfriend-client)
+
+It is also the base or the RaspsberryPi dedicated distro 
+
+Build and run:
 
     cd src
     docker-compose build
