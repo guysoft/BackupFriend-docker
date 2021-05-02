@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libsasl2-dev \
     curl \
     wget \
+    git \
     locales \
     sudo \
     unzip \
