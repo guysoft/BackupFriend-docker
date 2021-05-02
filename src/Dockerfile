@@ -70,7 +70,7 @@ RUN useradd backuser \
 
 
 RUN wget --no-check-certificate https://bootstrap.pypa.io/get-pip.py -O - | python3
-RUN pip3 install rdiffweb
+RUN pip3 install git+https://gitlab.com/guysoft/rdiffweb.git@backupfriend
 
 #===================================================
 # Run the following commands as non-privileged user
