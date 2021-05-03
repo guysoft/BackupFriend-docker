@@ -7,6 +7,8 @@ services:
     restart: always
     volumes:
       - "/backup:/backup"
+      - "/etc/rdiffweb/rdw.db:/etc/rdiffweb/rdw.db"
+      - "/etc/authorized_keys/user:/etc/authorized_keys/user"
       - "./rdw.conf:/etc/rdiffweb/rdw.conf"
     environment:
       # - DISPLAY=unix:0
@@ -22,7 +24,7 @@ services:
     restart: always
     volumes:
       - "/backup:/backup"
-      - "/home/pi/.ssh/authorized_keys:/etc/authorized_keys/user"
+      - "/etc/authorized_keys/user:/etc/authorized_keys/user"
     tty: true
     ports:
       - "8022:22"
