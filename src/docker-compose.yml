@@ -11,8 +11,10 @@ services:
       - "/etc/authorized_keys/user:/etc/authorized_keys/user"
       - "./rdw.conf:/etc/rdiffweb/rdw.conf"
     environment:
-      # - DISPLAY=unix:0
+      - VIRTUAL_HOST=backupfriend,backupfriend.local
       - VIRTUAL_PORT=8080
+      # - LETSENCRYPT_EMAIL=user@foo.bar.com
+      # - LETSENCRYPT_HOST=backupfriend.domain
     tty: true
     privileged: true
     entrypoint: rdiffweb
