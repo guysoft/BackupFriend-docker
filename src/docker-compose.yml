@@ -7,6 +7,7 @@ services:
     restart: always
     volumes:
       - "/backup:/backup"
+      - "/media:/media"
       - "/etc/rdiffweb/rdw.db:/etc/rdiffweb/rdw.db"
       - "/etc/authorized_keys/user:/etc/authorized_keys/user"
       - "./rdw.conf:/etc/rdiffweb/rdw.conf"
@@ -26,6 +27,7 @@ services:
     restart: always
     volumes:
       - "/backup:/backup"
+      - "/media:/media"
       - "/etc/authorized_keys/user:/etc/authorized_keys/user"
     tty: true
     ports:
