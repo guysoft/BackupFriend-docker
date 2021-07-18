@@ -4,23 +4,52 @@ This docker container used as a server-side to sync backups to [backupfriend-cli
 
 It is also the base or the RaspsberryPi dedicated distro 
 
-## RaspberryPi
 
-    cd src
-    docker-compose build
-    docker-compose up -d
+# House to use
+
+Pick your desired setup below
+
+## RaspberryPi
+It is recommended to use the pre-built RaspsberryPi image available at [BackupFriendPi](https://github.com/guysoft/BackupFriendPi). 
+It comes with extra stuff such as automatic mounting of hard drives and an nginx-proxy and has been tested by people. 
+
+However, if you really want to set this up on an existing Pi, where you have docker and docker-compose already installed, this is how to do it:
+
+
+```sh
+mkdir backupfriend-server
+cd backupfriend-server
+wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/docker-compose.yml
+wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/env_raspberrypi
+wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/rdw.conf
+mv env_server .env
+touch rdw.db
+sudo docker network create nginx-proxy
+sudo docker-compose up -d
+```
 
 ## Cloud server
 
-    cd src
-    docker-compose build
-    docker-compose up -d
+```sh
+mkdir backupfriend-server
+cd backupfriend-server
+wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/docker-compose.yml
+wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/env_server
+wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/rdw.conf
+mv env_server .env
+touch rdw.db
+sudo docker network create nginx-proxy
+sudo docker-compose up -d
+```
+    
+    
 
 ## Build and run
-
-    cd src
-    docker-compose build
-    docker-compose up -d
+```sh
+cd src
+docker-compose build
+docker-compose up -d
+```
 
 # Containers on docker hub:
 * [ssh container on Docker Hub](https://hub.docker.com/repository/docker/guysoft/backupfriend-ssh)
