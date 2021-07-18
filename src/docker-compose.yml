@@ -6,32 +6,32 @@ services:
     container_name: backupfriend
     restart: always
     volumes:
-      - "/backup:/backup"
-      - "/media:/media"
-      - "/etc/rdiffweb/rdw.db:/etc/rdiffweb/rdw.db"
-      - "/etc/authorized_keys/user:/etc/authorized_keys/user"
-      - "./rdw.conf:/etc/rdiffweb/rdw.conf"
+      - "${BACKUP_PATH}:/backup"
+      - "${MEDIA_PATH}:/media"
+      - "${DB_PATH}:/etc/rdiffweb/rdw.db"
+      - "${USER_KEYS_PATH}:/etc/authorized_keys/user"
+      - "${RDW_CONF}:/etc/rdiffweb/rdw.conf"
     environment:
-      - VIRTUAL_HOST=backupfriend,backupfriend.local
-      - VIRTUAL_PORT=8080
-      # - LETSENCRYPT_EMAIL=user@foo.bar.com
-      # - LETSENCRYPT_HOST=backupfriend.domain
+      - VIRTUAL_HOST=${VIRTUAL_HOST}
+      - VIRTUAL_PORT=${VIRTUAL_PORT}
+      # - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+      # - LETSENCRYPT_HOST=${LETSENCRYPT_HOST}
     tty: true
     privileged: true
     entrypoint: rdiffweb
     ports:
-      - "8082:8080"
+      - "${EXTRA_PORT}:8080"
   sshd:
     image: guysoft/backupfriend-ssh
     container_name: backupfriend-sshd
     restart: always
     volumes:
-      - "/backup:/backup"
-      - "/media:/media"
-      - "/etc/authorized_keys/user:/etc/authorized_keys/user"
+      - "${BACKUP_PATH}:/backup"
+      - "${MEDIA_PATH}:/media"
+      - "${USER_KEYS_PATH}:/etc/authorized_keys/user"
     tty: true
     ports:
-      - "8022:22"
+      - "${SSH_PORT}:22"
     environment:
       - SSH_USERS=user:1000:1000
 

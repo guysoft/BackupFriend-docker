@@ -4,7 +4,19 @@ This docker container used as a server-side to sync backups to [backupfriend-cli
 
 It is also the base or the RaspsberryPi dedicated distro 
 
-Build and run:
+## RaspberryPi
+
+    cd src
+    docker-compose build
+    docker-compose up -d
+
+## Cloud server
+
+    cd src
+    docker-compose build
+    docker-compose up -d
+
+## Build and run
 
     cd src
     docker-compose build
