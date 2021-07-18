@@ -7,7 +7,7 @@ It is also the base or the RaspsberryPi dedicated distro
 
 # House to use
 
-Pick your desiged setup below
+Pick your desired setup below
 
 ## RaspberryPi
 It is recommended to use the pre-built RaspsberryPi image available at [BackupFriendPi](https://github.com/guysoft/BackupFriendPi). 
