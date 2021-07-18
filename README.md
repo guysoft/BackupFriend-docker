@@ -12,9 +12,17 @@ It is also the base or the RaspsberryPi dedicated distro
 
 ## Cloud server
 
-    cd src
-    docker-compose build
-    docker-compose up -d
+    mkdir backupfriend-server
+    cd backupfriend-server
+    wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/docker-compose.yml
+    wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/env_server
+    wget https://raw.githubusercontent.com/guysoft/BackupFriend-docker/master/src/rdw.conf
+    mv env_server .env
+    touch rdw.db
+    sudo docker network create nginx-proxy
+    sudo docker-compose up -d
+    
+    
 
 ## Build and run
 
