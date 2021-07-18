@@ -1,3 +1,4 @@
+COMPOSE_PROJECT_NAME=backupfriend
 BACKUP_PATH=/backup
 MEDIA_PATH=/media
 DB_PATH=/etc/rdiffweb/rdw.db
